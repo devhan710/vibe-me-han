@@ -1,3 +1,288 @@
+/* 기본 여백·박스 모델 초기화 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 브랜드·텍스트 색·폰트 패밀리를 CSS 변수로 정의 */
+:root {
+    --brand: #6C5CE7;
+    --text: #1a1a1a;
+    --text-muted: #888888;
+    --bg: #f4f3f8;
+    --color-surface: #ffffff; /* 카드(표면) 배경 */
+    --color-shadow: rgba(0, 0, 0, 0.08); /* 카드 그림자 색 */
+    --font-display: "IBM Plex Sans KR", sans-serif;
+    --font-body: "Pretendard", sans-serif;
+}
+
+/* Pretendard Thin (100) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-display: swap;
+}
+
+/* Pretendard ExtraLight (200) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
+}
+
+/* Pretendard Light (300) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+/* Pretendard Regular (400) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* Pretendard Medium (500) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+/* Pretendard SemiBold (600) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+
+/* Pretendard Bold (700) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
+/* Pretendard ExtraBold (800) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+
+/* Pretendard Black (900) 웹폰트 등록 */
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+
+/* 페이지 배경 + 카드를 화면 중앙에 두기 (카드 밖 = body) */
 body {
-    background-color: #eb9047;
+    background-color: var(--bg);
+    min-height: 100vh; /* 세로 기준을 뷰포트 전체 높이로 잡음 */
+    display: flex; /* flex 컨테이너로 만듦 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    padding: 24px;
+    font-family: var(--font-body);
+    color: var(--text);
+}
+
+/* 글자 선택(드래그) 시 브랜드색 하이라이트 */
+::selection {
+    background-color: var(--brand);
+    color: var(--color-surface);
+}
+
+/* 모든 링크 밑줄 제거 */
+a {
+    text-decoration: none;
+}
+
+/* 카드가 아래에서 살짝 떠오르며 등장 */
+@keyframes card-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*
+ * 명함 카드 상자 (.card)
+ * - width: 100%  → 좁은 화면에서는 가로를 가득 채움
+ * - max-width: 420px → 넓은 화면에서는 420px까지만 커짐 (카드가 과하게 안 늘어남)
+ * - padding: 40px 32px → 안쪽 여백 (위아래 40, 좌우 32)
+ * - background / border-radius / box-shadow → 흰 면 + 둥근 모서리 + 떠 있는 느낌
+ */
+.card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 32px;
+    background: var(--color-surface);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px var(--color-shadow);
+    animation: card-in 0.6s ease both; /* 페이지 로드 시 부드러운 등장 */
+}
+
+/* 프로필 사진: 정사각 + 원형 클립 */
+.card > img {
+    width: 96px;
+    height: 96px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 16px;
+}
+
+/* 이름 제목: IBM Plex Sans KR로 강조, 크기·두께 */
+h1 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* 소속/역할: IBM Plex Sans KR로 이름과 한 묶음, 작게·흐린 색 */
+.role {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+/* 소개 문구: Pretendard로 읽기 편하게, 크기·줄간격 */
+.bio {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+/* 소개 블록 아래 간격 */
+section {
+    margin-bottom: 24px;
+}
+
+/* 링크 줄: flex로 가로 한 줄 + 가운데 + gap 간격 */
+.links {
+    display: flex; /* 링크들을 flex 아이템으로 나란히 배치 */
+    justify-content: center; /* 링크 묶음을 가로 가운데로 */
+    align-items: center; /* 링크 높이를 세로 중앙 맞춤 */
+    gap: 20px; /* 링크 사이 간격 (margin 대신 gap) */
+    margin-bottom: 24px;
+}
+
+/* 소셜 링크: 아이콘·텍스트 flex 정렬 + Pretendard + 브랜드색 */
+.links a {
+    display: flex; /* 아이콘과 글자를 한 줄 flex로 */
+    align-items: center; /* 아이콘·글자 세로 중앙 정렬 */
+    gap: 8px; /* 아이콘과 글자 사이 간격 (margin 대신 gap) */
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--brand);
+    text-decoration: none;
+    transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* 링크 hover 시 살짝 진한 브랜드색 */
+.links a:hover {
+    color: color-mix(in srgb, var(--brand) 75%, black);
+}
+
+/* 푸터 아이콘과 텍스트 사이 간격 */
+footer i {
+    margin-right: 0.35em;
+}
+
+/* 연락처 버튼: 글꼴 상속 + 브랜드색 */
+.contact-button {
+    background-color: var(--brand);
+    color: var(--color-surface);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+/* 버튼 hover: 떠오름 + 배경색 변화 */
+.contact-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px var(--color-shadow);
+    background-color: color-mix(in srgb, var(--brand) 80%, black);
+}
+
+/* 푸터 저작권 문구: Pretendard, 작고 흐린 색 */
+footer {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+/* 모달 오버레이: 열림/닫힘 모두 부드럽게 */
+.modal {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* 닫힐 때: opacity 끝난 뒤에야 완전히 숨김 */
+    transition:
+        opacity 0.3s ease,
+        visibility 0s linear 0.3s;
+}
+
+/* 열림 */
+.modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    /* 열릴 때: visibility는 즉시 */
+    transition:
+        opacity 0.3s ease,
+        visibility 0s linear 0s;
+}
+
+/* 모달 안쪽 상자: 열릴 때 커지고, 닫힐 때 다시 줄어듦 */
+.modal_box {
+    background: #fff;
+    padding: 32px;
+    border-radius: 20px;
+    transform: scale(0.96) translateY(12px);
+    opacity: 0;
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+}
+
+.modal.is-open .modal_box {
+    transform: scale(1) translateY(0);
+    opacity: 1;
 }
