@@ -6,10 +6,12 @@ const modal = document.querySelector('#modal');
 function openModal() {
     title.textContent = '반갑습니다!!';
     modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
 }
 
 function closeModal() {
     modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
 }
 
 // 연락처 버튼 → 모달 열기
